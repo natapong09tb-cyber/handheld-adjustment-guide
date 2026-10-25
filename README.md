@@ -1,9 +1,3 @@
 # Handheld Adjustment Guide
 
-คู่มือการใช้งาน Handheld สำหรับ DENSO และ CROBOTP พร้อมภาษาไทย English และ日本語 และดาวน์โหลด PDF ตามภาษาที่เลือก
-
-- `index.html` เป็นคู่มือ R14 ที่ผ่านการตรวจรับ พร้อมภาพและ PDF ทั้งสามภาษาในตัว
-- แบบฝึกภายในใช้ข้อมูลออฟไลน์ ไม่เชื่อมต่อหรือสั่ง Controller จริง
-- `.nojekyll` ใช้เผยแพร่ไฟล์โดยตรงผ่าน GitHub Pages
-
-The approved R14 manual is self-contained. Its practice interface is offline and does not control physical robots.
+Optimized static hosting of the approved R14 manual. Manual images load as needed. Each language PDF downloads on request. The offline practice runtime loads only after opening Simulator. All image and PDF bytes are preserved. Keep all files together at the same directory level. No controller connection is made.
