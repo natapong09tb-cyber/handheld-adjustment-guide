@@ -1,3 +1,30 @@
 # Handheld Adjustment Guide
 
-Optimized static hosting of the approved R14 manual. Manual images load as needed. Each language PDF downloads on request. The offline practice runtime loads only after opening Simulator. All image and PDF bytes are preserved. Keep all files together at the same directory level. No controller connection is made.
+Optimized static hosting of the Handheld Adjustment Guide. Manual images load as needed. Each language PDF downloads on request. The offline practice runtime loads only after opening Simulator. Keep all site assets and PDFs together at the same directory level. No controller connection is made.
+
+The downloadable Thai, English and Japanese PDFs include the existing TECHNO-METAL company logo at the upper-left of every page. The logo is `brand-6797e0f64f068274.webp`, the same asset identified as `class="company"` and `alt="TECHNO-METAL"` in `index.html`.
+
+## Rebuild the PDF headers
+
+Install the Python dependencies in `scripts/requirements-pdf.txt`, and make Poppler's `pdftoppm` available on `PATH` for verification. Run from a Git checkout:
+
+```sh
+python scripts/build_pdf_logos.py
+python scripts/verify_pdf_logos.py
+```
+
+The builder reads the approved PDFs from immutable commit `a9cca786d9863e7a87e587d785fd985fe2534783` using local `git show`, then replaces only the three PDF downloads. That commit must be present locally. Rerunning the builder starts from those originals, so it does not add duplicate logos. It does not fetch, push or publish anything.
+
+The PDF filenames remain stable because the site links to them:
+
+| Download | Pages | Size |
+| --- | ---: | --- |
+| `Handheld_Adjustment_Guide_R12_A4_TH.pdf` | 43 | A4 landscape |
+| `Handheld_Adjustment_Guide_R12_A4_EN.pdf` | 45 | A4 landscape |
+| `Handheld_Adjustment_Guide_R12_A4_JA.pdf` | 44 | A4 landscape |
+
+The full logo retains its original 1602:982 aspect ratio and transparency. It is 27 pt high at x=28 pt, y=7 pt from the top, with a 3 pt white backing so the black company name stays readable. The running header text moves from x=28 to x=86 pt. Its original 32 pt background height is preserved; the logo backing ends at 37 pt, inside the existing blank margin above page titles. Page titles, body text, numbering, translations, images and their coordinates are unchanged.
+
+The verifier checks every page's original drawing operators, exact extracted text, glyph coordinates, source image streams, page size and logo geometry. It renders the originals and results at 144 dpi with Poppler, checks actual heading ink clearance (including Thai marks beyond the font bounding boxes), and requires zero changed pixels below the logo backing. Review PNGs, contact sheets, a build manifest and per-page `verification.json` are written outside the checkout to `../pdf-logo-review/`. Inspect those images before publishing.
+
+For future content revisions, update the immutable baseline and expected page counts only after reviewing the new source PDFs. The builder deliberately rejects an unexpected source header instead of guessing a placement.
